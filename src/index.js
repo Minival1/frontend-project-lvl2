@@ -33,9 +33,15 @@ const genDiff = (filepath1, filepath2) => {
             acc.push(`${setSpaces(2)}- ${key}: ${file1[key]}`);
             return acc;
         }
-    }, []).join("\n");
+    }, []);
     
-    console.log(`{\n${result}\n}`);
+    const formattedResult = `{\n${result.join("\n")}\n}`;
+    
+    const formattedLine = `{${result.join("")}}`;
+
+    console.log(formattedResult);
+    
+    return formattedLine;
 }
 
 function setSpaces(count) {
