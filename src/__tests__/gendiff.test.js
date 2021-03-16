@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const __fixtures = '__fixtures__';
 
-test('flat json', () => {
+test('flat json or yaml exntensions', () => {
 	const file1Path = path.resolve(__dirname, __fixtures, 'file1.json');
 	const file2Path = path.resolve(__dirname, __fixtures, 'file2.json');
 
