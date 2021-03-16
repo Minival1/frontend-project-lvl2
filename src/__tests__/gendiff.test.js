@@ -8,9 +8,19 @@ const __dirname = path.dirname(__filename);
 
 const __fixtures = '__fixtures__';
 
-test('flat json or yaml exntensions', () => {
+test('flat json', () => {
 	const file1Path = path.resolve(__dirname, __fixtures, 'file1.json');
 	const file2Path = path.resolve(__dirname, __fixtures, 'file2.json');
+
+	const result = path.resolve(__dirname, __fixtures, 'result-flat.txt');
+	const resultRead = fs.readFileSync(result, 'utf-8');
+
+	expect(genDiff(file1Path, file2Path)).toBe(resultRead);
+});
+
+test('flat yaml', () => {
+	const file1Path = path.resolve(__dirname, __fixtures, 'file1.yaml');
+	const file2Path = path.resolve(__dirname, __fixtures, 'file2.yaml');
 
 	const result = path.resolve(__dirname, __fixtures, 'result-flat.txt');
 	const resultRead = fs.readFileSync(result, 'utf-8');
