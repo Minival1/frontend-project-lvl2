@@ -1,16 +1,14 @@
-import fs from 'fs';
 import _ from 'lodash';
+import parser from './parsers.js';
 
 function setSpaces(count) {
 	return ' '.repeat(count);
 }
 
 const genDiff = (filepath1, filepath2) => {
-	const file1Read = fs.readFileSync(filepath1, 'utf-8');
-	const file2Read = fs.readFileSync(filepath2, 'utf-8');
 
-	const file1 = JSON.parse(file1Read);
-	const file2 = JSON.parse(file2Read);
+	const file1 = parser(filepath1);
+	const file2 = parser(filepath2);
 
 	const allKeys = _.uniqBy([...Object.keys(file1), ...Object.keys(file2)]).sort();
 
