@@ -26,7 +26,8 @@
   "homepage": "https://github.com/Minival1/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^7.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "eslint": "^7.22.0",
