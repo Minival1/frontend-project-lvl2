@@ -1,48 +1,51 @@
 import _ from 'lodash';
+import stylish from './formatters/stylish.js';
 import parser from './parsers.js';
-
-function setSpaces(count) {
-	return ' '.repeat(count);
-}
 
 const genDiff = (filepath1, filepath2) => {
 
 	const file1 = parser(filepath1);
 	const file2 = parser(filepath2);
 
-	const allKeys = _.uniqBy([...Object.keys(file1), ...Object.keys(file2)]).sort();
-
-	const result = allKeys.reduce((acc, key) => {
-		// ЕСЛИ ВО 2 ОБЪЕКТЕ ЕСТЬ ЭТОТ КЛЮЧ
-		if (Object.prototype.hasOwnProperty.call(file2, key)) {
-			// И ЕСЛИ КЛЮЧИ ДВУХ ОБЪЕКТОВ НЕ РАВНЫ И В 1 ОБЪЕКТЕ ОН ЕСТЬ
-			if (file2[key] !== file1[key] && Object.prototype.hasOwnProperty.call(file1, key)) {
-				// ОТОБРАЖЕНИЕ ИЗМЕНЕНИЯ ОБЪЕКТА
-				acc.push(`${setSpaces(2)}- ${key}: ${file1[key]}`);
-				acc.push(`${setSpaces(2)}+ ${key}: ${file2[key]}`);
-				return acc;
-				// И ЕСЛИ КЛЮЧИ ДВУХ ОБЪЕКТОВ НЕ РАВНЫ И В 1 ОБЪЕКТЕ ЕГО НЕТ
-			} if (file2[key] !== file1[key] && !Object.prototype.hasOwnProperty.call(file1, key)) {
-				// ОТОБРАЖЕНИЕ ДОБАВЛЕНИЯ ЭЛЕМЕНТА
-				acc.push(`${setSpaces(2)}+ ${key}: ${file2[key]}`);
-				return acc;
-			}
-			// ОТОБРАЖЕНИЕ ОДИНАКОВОГО ЭЛЕМЕНТА
-			acc.push(`${setSpaces(4)}${key}: ${file1[key]}`);
-			return acc;
-		}
-		// ОТОБРАЖЕНИЕ УДАЛЕНИЯ ЭЛЕМЕНТА
-		acc.push(`${setSpaces(2)}- ${key}: ${file1[key]}`);
-		return acc;
-	}, []);
-
-	const formattedResult = `{\n${result.join('\n')}\n}`;
-
-	const formattedLine = `{${result.join('')}}`;
-
-	console.log(formattedResult);
-
-	return formattedLine;
+	// console.log(JSON.stringify(createTree(file1, file2), null, 4));
+	// console.log(createTree(file1, file2));
+	console.log(stylish(createTree(file1, file2)));
+	// stylish(createTree(file1, file2));
 };
 
+const createTree = (obj1, obj2) => {
+	const allKeys = _.uniqBy([...Object.keys(obj1), ...Object.keys(obj2)]).sort();
+
+	const travel = (key) => {
+		const value1 = obj1[key];
+		const value2 = obj2[key];
+
+		if (_.isObject(value1) && _.isObject(value2)) {
+			return {key, currentValue: createTree(value1, value2), type: "compared"};
+		}
+
+		if (_.has(obj1, key) && !_.has(obj2, key)) {
+			return { key, currentValue: value1, type: "deleted" };
+		}
+		if (!_.has(obj1, key) && _.has(obj2, key)) {
+			return { key, currentValue: value2, type: "added" };
+		}
+		if (value1 === value2) {
+			return { key, currentValue: value1, type: "equal" };
+		}
+		if (value1 !== value2) {
+			return {key, oldValue: value1, currentValue: value2, type: "modify" };
+		}
+	}
+
+	return allKeys.map(travel);
+}
+
 export default genDiff;
+
+
+// const formattedResult = `{\n${result.join('\n')}\n}`;
+
+// const formattedLine = `{${result.join('')}}`;
+
+// console.log(formattedResult);
