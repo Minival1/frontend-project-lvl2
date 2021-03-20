@@ -3,7 +3,7 @@ import parser from './parsers.js';
 import formatter from './formatters/index.js';
 
 const createTree = (obj1, obj2) => {
-  const allKeys = _.uniqBy([...Object.keys(obj1), ...Object.keys(obj2)]).sort();
+  const allKeys = _.sortBy(_.uniqBy([...Object.keys(obj1), ...Object.keys(obj2)]));
 
   const travel = (key) => {
     const value1 = obj1[key];

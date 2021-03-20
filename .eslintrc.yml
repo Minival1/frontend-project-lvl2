@@ -17,3 +17,4 @@ rules:
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
   fp/no-let: "error"
   fp/no-mutation: "error"
+  fp/no-mutating-methods: "error"
