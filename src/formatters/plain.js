@@ -1,6 +1,14 @@
 import _ from 'lodash';
 
-const helper = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
+const helper = (value) => {
+	if (typeof value === 'string') {
+		return `'${value}'`;
+	}
+	if (_.isObject(value)) {
+		return '[complex value]';
+	}
+	return value;
+};
 
 const createPath = (path, key) => (path.length > 0 ? path.concat(`.${key}`) : key);
 
@@ -29,4 +37,4 @@ const format = (tree, path = '') => {
 	return tree.flatMap(travel).filter((item) => item !== '').join('\n');
 };
 
-export default (tree) => `\n${format(tree)}\n`;
+export default (tree) => `${format(tree)}`;
