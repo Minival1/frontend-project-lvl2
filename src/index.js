@@ -37,6 +37,10 @@ const genDiff = (filepath1, filepath2, format) => {
 	const file2 = parser(filepath2);
 	const tree = createTree(file1, file2);
 
+	if (format !== 'stylish' || format !== 'json' || format !== 'plain') {
+		return formatter('stylish', tree);
+	}
+
 	return formatter(format, tree);
 };
 
