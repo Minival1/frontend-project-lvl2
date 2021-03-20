@@ -1,5 +1,6 @@
 plugins:
   - 'jest'
+  - 'fp'
 env:
   node: true
   es2021: true
@@ -14,3 +15,5 @@ rules:
   indent: ["error"]
   import/extensions: 0
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+  fp/no-let: "error"
+  fp/no-mutation: "error"

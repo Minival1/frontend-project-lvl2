@@ -6,7 +6,7 @@ import genDiff from '../index';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const fixtures = 'fixtures__';
+const fixtures = '__fixtures__';
 
 test('recursion json', () => {
   const file1Path = path.resolve(__dirname, fixtures, 'file1-recursion.json');
@@ -15,10 +15,10 @@ test('recursion json', () => {
   const result = path.resolve(__dirname, fixtures, 'result-recursion.txt');
   const resultRead = fs.readFileSync(result, 'utf-8');
 
-  let noSpaces = genDiff(file1Path, file2Path, 'stylish');
-  noSpaces = noSpaces.replace(/\s/g, '');
+  const resultWithSpaces = genDiff(file1Path, file2Path, 'stylish');
+  const resultNoSpaces = resultWithSpaces.replace(/\s/g, '');
 
-  expect(noSpaces).toBe(resultRead);
+  expect(resultNoSpaces).toBe(resultRead);
 });
 
 test('recursion yaml', () => {
@@ -28,10 +28,10 @@ test('recursion yaml', () => {
   const result = path.resolve(__dirname, fixtures, 'result-recursion.txt');
   const resultRead = fs.readFileSync(result, 'utf-8');
 
-  let noSpaces = genDiff(file1Path, file2Path, 'stylish');
-  noSpaces = noSpaces.replace(/\s/g, '');
+  const resultWithSpaces = genDiff(file1Path, file2Path, 'stylish');
+  const resultNoSpaces = resultWithSpaces.replace(/\s/g, '');
 
-  expect(noSpaces).toBe(resultRead);
+  expect(resultNoSpaces).toBe(resultRead);
 });
 
 test('plain json', () => {
@@ -41,9 +41,10 @@ test('plain json', () => {
   const result = path.resolve(__dirname, fixtures, 'result-plain.txt');
   const resultRead = fs.readFileSync(result, 'utf-8');
 
-  let noSpaces = genDiff(file1Path, file2Path, 'plain');
-  noSpaces = noSpaces.replace(/\s/g, '');
-  expect(noSpaces).toBe(resultRead);
+  const resultWithSpaces = genDiff(file1Path, file2Path, 'plain');
+  const resultNoSpaces = resultWithSpaces.replace(/\s/g, '');
+  console.log(resultNoSpaces);
+  expect(resultNoSpaces).toBe(resultRead);
 });
 
 test('plain yaml', () => {
@@ -53,9 +54,9 @@ test('plain yaml', () => {
   const result = path.resolve(__dirname, fixtures, 'result-plain.txt');
   const resultRead = fs.readFileSync(result, 'utf-8');
 
-  let noSpaces = genDiff(file1Path, file2Path, 'plain');
-  noSpaces = noSpaces.replace(/\s/g, '');
-  expect(noSpaces).toBe(resultRead);
+  const resultWithSpaces = genDiff(file1Path, file2Path, 'plain');
+  const resultNoSpaces = resultWithSpaces.replace(/\s/g, '');
+  expect(resultNoSpaces).toBe(resultRead);
 });
 
 test('format json', () => {
@@ -65,7 +66,7 @@ test('format json', () => {
   const result = path.resolve(__dirname, fixtures, 'result-json.txt');
   const resultRead = fs.readFileSync(result, 'utf-8');
 
-  let noSpaces = genDiff(file1Path, file2Path, 'json');
-  noSpaces = noSpaces.replace(/\s/g, '');
-  expect(noSpaces).toBe(resultRead);
+  const resultWithSpaces = genDiff(file1Path, file2Path, 'json');
+  const resultNoSpaces = resultWithSpaces.replace(/\s/g, '');
+  expect(resultNoSpaces).toBe(resultRead);
 });
