@@ -42,4 +42,4 @@ const format = (tree, tabs) => {
 	return tree.flatMap(travel).join('\n');
 };
 
-export default (tree) => `\n{\n${format(tree, 1)}\n}\n`;
+export default (tree) => `{\n${format(tree, 1)}\n}`;
