@@ -43,7 +43,7 @@ test('plain json', () => {
 
   const resultWithSpaces = genDiff(file1Path, file2Path, 'plain');
   const resultNoSpaces = resultWithSpaces.replace(/\s/g, '');
-  console.log(resultNoSpaces);
+
   expect(resultNoSpaces).toBe(resultRead);
 });
 
