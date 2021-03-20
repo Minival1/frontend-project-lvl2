@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const helper = (value) => (_.isObject(value) ? '[complex value]' : value);
+const helper = (value) => (_.isObject(value) ? '[complex value]' : `'${value}'`);
 
 const createPath = (path, key) => (path.length > 0 ? path.concat(`.${key}`) : key);
 
@@ -19,7 +19,7 @@ const format = (tree, path = '') => {
 			added: () => `Property '${fullPath}' was added with value: ${helper(currentValue)}`,
 			deleted: () => `Property '${fullPath}' was removed`,
 			equal: () => '',
-			modify: () => `Property '${fullPath}' was updated. From ${helper(oldValue)} to '${helper(currentValue)}'`,
+			modify: () => `Property '${fullPath}' was updated. From ${helper(oldValue)} to ${helper(currentValue)}`,
 			compared: () => format(currentValue, fullPath),
 		};
 
