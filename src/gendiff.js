@@ -9,15 +9,14 @@ const program = new Command();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log(__dirname);
-
 program
 	.version('0.1')
 	.description('Compares two configuration files and shows a difference.')
 	.option('-f, --format [type]', 'output format', 'stylish')
 	.arguments('<filepath1> <filepath2>')
 	.action((filepath1, filepath2) => {
-		const result = genDiff(filepath1, filepath2, program.format);
+		const options = program.opts();
+		const result = genDiff(filepath1, filepath2, options.format);
 		console.log(result);
 	});
 

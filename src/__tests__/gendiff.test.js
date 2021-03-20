@@ -8,22 +8,52 @@ const __dirname = path.dirname(__filename);
 
 const __fixtures = '__fixtures__';
 
-test('flat json', () => {
-	const file1Path = path.resolve(__dirname, __fixtures, 'file1.json');
-	const file2Path = path.resolve(__dirname, __fixtures, 'file2.json');
+test("recursion json", () => {
+	const file1Path = path.resolve(__dirname, __fixtures, 'file1-recursion.json');
+	const file2Path = path.resolve(__dirname, __fixtures, 'file2-recursion.json');
 
-	const result = path.resolve(__dirname, __fixtures, 'result-flat.txt');
+	const result = path.resolve(__dirname, __fixtures, 'result-recursion.txt');
 	const resultRead = fs.readFileSync(result, 'utf-8');
 
-	expect(genDiff(file1Path, file2Path)).toBe(resultRead);
-});
+	let noSpaces = genDiff(file1Path, file2Path, "stylish");
+	noSpaces = noSpaces.replace(/\s/g, '');
 
-test('flat yaml', () => {
-	const file1Path = path.resolve(__dirname, __fixtures, 'file1.yaml');
-	const file2Path = path.resolve(__dirname, __fixtures, 'file2.yaml');
+	expect(noSpaces).toBe(resultRead);
+})
 
-	const result = path.resolve(__dirname, __fixtures, 'result-flat.txt');
+test("recursion yaml", () => {
+	const file1Path = path.resolve(__dirname, __fixtures, 'file1-recursion.yaml');
+	const file2Path = path.resolve(__dirname, __fixtures, 'file2-recursion.yaml');
+
+	const result = path.resolve(__dirname, __fixtures, 'result-recursion.txt');
 	const resultRead = fs.readFileSync(result, 'utf-8');
 
-	expect(genDiff(file1Path, file2Path)).toBe(resultRead);
-});
+	let noSpaces = genDiff(file1Path, file2Path, "stylish");
+	noSpaces = noSpaces.replace(/\s/g, '');
+
+	expect(noSpaces).toBe(resultRead);
+})
+
+test("plain json", () => {
+	const file1Path = path.resolve(__dirname, __fixtures, 'file1-recursion.json');
+	const file2Path = path.resolve(__dirname, __fixtures, 'file2-recursion.json');
+
+	const result = path.resolve(__dirname, __fixtures, 'result-plain.txt');
+	const resultRead = fs.readFileSync(result, 'utf-8');
+
+	let noSpaces = genDiff(file1Path, file2Path, "plain");
+	noSpaces = noSpaces.replace(/\s/g, '');
+	expect(noSpaces).toBe(resultRead);
+})
+
+test("plain yaml", () => {
+	const file1Path = path.resolve(__dirname, __fixtures, 'file1-recursion.yaml');
+	const file2Path = path.resolve(__dirname, __fixtures, 'file2-recursion.yaml');
+
+	const result = path.resolve(__dirname, __fixtures, 'result-plain.txt');
+	const resultRead = fs.readFileSync(result, 'utf-8');
+
+	let noSpaces = genDiff(file1Path, file2Path, "plain");
+	noSpaces = noSpaces.replace(/\s/g, '');
+	expect(noSpaces).toBe(resultRead);
+})

@@ -1,7 +1,6 @@
 import _ from 'lodash';
-// import stylish from './formatters/stylish.js';
-import plain from './formatters/plain.js';
 import parser from './parsers.js';
+import formatter from './formatters/index.js';
 
 const createTree = (obj1, obj2) => {
 	const allKeys = _.uniqBy([...Object.keys(obj1), ...Object.keys(obj2)]).sort();
@@ -33,11 +32,12 @@ const createTree = (obj1, obj2) => {
 	return allKeys.map(travel);
 };
 
-const genDiff = (filepath1, filepath2, formatter = plain) => {
+const genDiff = (filepath1, filepath2, format) => {
 	const file1 = parser(filepath1);
 	const file2 = parser(filepath2);
-
-	return formatter(createTree(file1, file2));
+	const tree = createTree(file1, file2);
+	
+	return formatter(format, tree);
 };
 
 export default genDiff;
