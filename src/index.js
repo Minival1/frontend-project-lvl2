@@ -36,7 +36,7 @@ const genDiff = (filepath1, filepath2, format) => {
 	const file1 = parser(filepath1);
 	const file2 = parser(filepath2);
 	const tree = createTree(file1, file2);
-	
+
 	return formatter(format, tree);
 };
 
