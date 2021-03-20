@@ -9,7 +9,7 @@ export default (filepath) => {
 	if (extension === '.json') {
 		return JSON.parse(fileRead);
 	}
-	if (extension === '.yaml') {
+	if (extension === '.yaml' || extension === '.yml') {
 		return YAML.parse(fileRead);
 	}
 	throw new Error('this extension is not supported, please use files with extension .json or .yaml');
