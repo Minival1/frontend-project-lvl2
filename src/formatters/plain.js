@@ -1,40 +1,40 @@
 import _ from 'lodash';
 
 const helper = (value) => {
-	if (typeof value === 'string') {
-		return `'${value}'`;
-	}
-	if (_.isObject(value)) {
-		return '[complex value]';
-	}
-	return value;
+  if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  return value;
 };
 
 const createPath = (path, key) => (path.length > 0 ? path.concat(`.${key}`) : key);
 
 const format = (tree, path = '') => {
-	function travel(obj) {
-		const {
-			key,
-			currentValue,
-			oldValue,
-			type,
-		} = obj;
+  function travel(obj) {
+    const {
+      key,
+      currentValue,
+      oldValue,
+      type,
+    } = obj;
 
-		const fullPath = createPath(path, key);
+    const fullPath = createPath(path, key);
 
-		const types = {
-			added: () => `Property '${fullPath}' was added with value: ${helper(currentValue)}`,
-			deleted: () => `Property '${fullPath}' was removed`,
-			equal: () => '',
-			modify: () => `Property '${fullPath}' was updated. From ${helper(oldValue)} to ${helper(currentValue)}`,
-			compared: () => format(currentValue, fullPath),
-		};
+    const types = {
+      added: () => `Property '${fullPath}' was added with value: ${helper(currentValue)}`,
+      deleted: () => `Property '${fullPath}' was removed`,
+      equal: () => '',
+      modify: () => `Property '${fullPath}' was updated. From ${helper(oldValue)} to ${helper(currentValue)}`,
+      compared: () => format(currentValue, fullPath),
+    };
 
-		return types[type]();
-	}
+    return types[type]();
+  }
 
-	return tree.flatMap(travel).filter((item) => item !== '').join('\n');
+  return tree.flatMap(travel).filter((item) => item !== '').join('\n');
 };
 
 export default (tree) => `${format(tree)}`;
